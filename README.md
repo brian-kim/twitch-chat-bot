@@ -15,12 +15,12 @@ To deploy the app, run `npm run dev` in the root directory of the project.
 ## Commands
 Command | Description
 --- | ---
-`!hello` | Responds to user with a hello message.
+`!hello` | Responds to users with a hello message.
 `!title NEW_TITLE` | Changes the current stream title.
 `!game GAME_TITLE` | Changes the current stream game.
 `!random` | Generates a random number from 0 to 100.
 `!random NUM` | Generates a random number from 0 to NUM.
-`!love TEXT` | Generates a random percentage from 0 to 100 displaying the love between USER and TEXT
+`!love TEXT` | Generates a random percentage from 0 to 100 displaying the love between users and TEXT
 
 ALl invalid commands will respond with an error message.
 
