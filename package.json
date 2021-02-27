@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.7",
+    "tmi.js": "^1.7.2"
+  },
+  "name": "twitch-chat-bot",
+  "version": "1.0.0",
+  "main": "twitchChatBot.js",
+  "scripts": {
+    "dev": "nodemon ./src/twitchChatBot.js"
+  },
+  "author": "Brian Kim",
+  "license": "ISC",
+  "description": ""
+}
