@@ -31,4 +31,4 @@ const streamHeaders = {
 module.exports = {
   clientVars,
   streamHeaders
-}
+};

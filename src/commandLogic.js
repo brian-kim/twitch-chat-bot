@@ -8,4 +8,4 @@ const randomNumberGenerator = (num) => {
 
 module.exports = {
   randomNumberGenerator
-}
+};
