@@ -56,8 +56,8 @@ client.on('message', (channel, user, msg, self) => {
     axios.put(`https://api.twitch.tv/v5/channels/${process.env.STREAMER_CHANNEL_ID}`, newGame, streamHeaders)
       .then(client.say(channel, `Game changed to "${newGame.channel.game}"`))
       .catch(err => console.log(err))
-  // Error message for invalid command
-  } else {
+  // Error message for invalid commands
+  } else if (command[0] === '!') {
     client.say(channel, `Invalid command`);
   }
 });
