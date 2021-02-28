@@ -17,14 +17,11 @@ const clientVars = {
 };
 
 // Headers required to change stream title/game
+// Token generated from https://twitchtokengenerator.com/
 const streamHeaders = {
   headers: {
-    // Client-ID from https://dev.twitch.tv/console/apps
     'Client-ID': process.env.BOT_CLIENT_ID,
-    // Token from https://twitchapps.com/tmi/
     'Authorization': process.env.BOT_AUTHORIZATION,
-    'Accept': 'application/vnd.twitchtv.v2+json',
-    'Content-Type': 'application/json'
   }
 }
 
