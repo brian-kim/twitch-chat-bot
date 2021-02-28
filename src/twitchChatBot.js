@@ -1,9 +1,8 @@
 require('dotenv').config();
 const tmi = require('tmi.js');
-const axios = require('axios');
 
-const { clientVars, streamHeaders } = require('./clientVars');
-const { randomNumberGenerator } = require('./commandLogic');
+const { clientVars } = require('./variables');
+const helpers = require('./helpers');
 
 //Twitch docs can be found here: https://dev.twitch.tv/docs/
 const client = new tmi.Client(clientVars);
@@ -29,31 +28,23 @@ client.on('message', (channel, user, msg, self) => {
     client.say(channel, `Hey, what's up ${user.username}`);
   // Random number generator
   } else if (command === '!random') {
-    const generatedNum = randomNumberGenerator(args[0]);
+    const generatedNum = helpers.randomNumberGenerator(args[0]);
     client.say(channel, `${user.username} rolled ${generatedNum}`);
   // Shows random love percentage between user and message
   } else if (command === '!love') {
-    const generatePercentage = randomNumberGenerator();
+    const generatePercentage = helpers.randomNumberGenerator();
     client.say(channel, `There is ${generatePercentage}% love between ${user.username} and ${commandArgs}.`);
+  // Only broadcaster or mods can change stream info
   // Change stream title
-  } else if (user.username === process.env.STREAMER_USERNAME && command === '!title') {
-    const newTitle = {
-      'channel': {
-        'status': commandArgs
-      }
+  } else if ((user.username === process.env.STREAMER_USERNAME || user.mod) && command === '!title') {
+    const newInfo = {
+      'title': commandArgs
     };
-    axios.put(`https://api.twitch.tv/v5/channels/${process.env.STREAMER_CHANNEL_ID}`, newTitle, streamHeaders)
-      .then(client.say(channel, `Title changed to "${newTitle.channel.status}"`))
-      .catch(err => console.log(err))
+    helpers.changeStreamInfo(newInfo);
+    client.say(channel, `Title has been changed to "${commandArgs}"`);
   // Change stream game
-  } else if (user.username === process.env.STREAMER_USERNAME && command === '!game') {
-    const newGame = {
-      'channel': {
-        'game': commandArgs
-      }
-    };
-    axios.put(`https://api.twitch.tv/v5/channels/${process.env.STREAMER_CHANNEL_ID}`, newGame, streamHeaders)
-      .then(client.say(channel, `Game changed to "${newGame.channel.game}"`))
-      .catch(err => console.log(err))
+  } else if ((user.username === process.env.STREAMER_USERNAME || user.mod) && command === '!game') {
+    helpers.changeStreamGame(commandArgs);
+    client.say(channel, `Game has been changed to "${commandArgs}"`);
   }
 });
