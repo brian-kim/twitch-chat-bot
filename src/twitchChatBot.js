@@ -29,8 +29,7 @@ client.on('message', (channel, user, msg, self) => {
     client.say(channel, `Hey, what's up ${user.username}`);
   // Random number generator
   } else if (command === '!random') {
-    const inputNum = parseInt(args[0]);
-    const generatedNum = randomNumberGenerator(inputNum);
+    const generatedNum = randomNumberGenerator(args[0]);
     client.say(channel, `${user.username} rolled ${generatedNum}`);
   // Shows random love percentage between user and message
   } else if (command === '!love') {

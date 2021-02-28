@@ -1,8 +1,9 @@
 const randomNumberGenerator = (num) => {
-  if (!num || isNaN(num)) {
+  const toInteger = parseInt(num);
+  if (isNaN(toInteger)) {
     return Math.floor(Math.random() * 101);
   } else {
-    return Math.floor(Math.random() * (num + 1));
+    return Math.floor(Math.random() * (toInteger + 1));
   }
 }
 
