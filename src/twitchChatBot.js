@@ -1,11 +1,9 @@
 require('dotenv').config();
-const tmi = require('tmi.js');
+const axios = require('axios');
 
-const { clientVars } = require('./variables');
+const { client } = require('./client');
+const { streamHeaders } = require('./variables');
 const helpers = require('./helpers');
-
-//Twitch docs can be found here: https://dev.twitch.tv/docs/
-const client = new tmi.Client(clientVars);
 
 client.connect();
 
@@ -15,9 +13,7 @@ client.on('connected', (addr, port) => {
 
 client.on('message', (channel, user, msg, self) => {
   // Ignore echoed messages.
-  if (self) {
-    return;
-  };
+  if (self) {return};
 
   const args = msg.split(' ');
   const command = args.shift().toLowerCase();
@@ -34,15 +30,24 @@ client.on('message', (channel, user, msg, self) => {
   } else if (command === '!love') {
     const generatePercentage = helpers.randomNumberGenerator();
     client.say(channel, `There is ${generatePercentage}% love between ${user.username} and ${commandArgs}.`);
-  // Only broadcaster or mods can change stream info
-  // Change stream title
+  // Get the current stream title
+  } else if (command === '!title') {
+    axios.get(`https://api.twitch.tv/helix/channels?broadcaster_id=${process.env.STREAMER_CHANNEL_ID}`, streamHeaders)
+      .then(res => client.say(channel, `Current title: ${res.data.data[0].title}`))
+      .catch(err => console.log(err));
+    // Get current stream game
+  } else if (command === '!game') {
+    axios.get(`https://api.twitch.tv/helix/channels?broadcaster_id=${process.env.STREAMER_CHANNEL_ID}`, streamHeaders)
+      .then(res => client.say(channel, `Current game: ${res.data.data[0].game_name}`))
+      .catch(err => console.log(err))
+  // Allow broadcaster or mod to change stream title
   } else if ((user.username === process.env.STREAMER_USERNAME || user.mod) && command === '!title') {
     const newInfo = {
       'title': commandArgs
     };
     helpers.changeStreamInfo(newInfo);
     client.say(channel, `Title has been changed to "${commandArgs}"`);
-  // Change stream game
+  // Allow broadcaster or mod to change stream game
   } else if ((user.username === process.env.STREAMER_USERNAME || user.mod) && command === '!game') {
     helpers.changeStreamGame(commandArgs);
     client.say(channel, `Game has been changed to "${commandArgs}"`);
