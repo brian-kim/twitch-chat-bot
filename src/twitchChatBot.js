@@ -20,8 +20,8 @@ client.on('message', (channel, user, msg, self) => {
   const commandArgs = args.join(' ');
 
   // Basic hello response
-  if (command === '!hello') {
-    client.say(channel, `Hey, what's up ${user.username}`);
+  if (msg === 'hello' || msg === 'hi' || msg === 'hey') {
+    client.say(channel, `Hey ${user.username} AYAYA`);
   // Random number generator
   } else if (command === '!random') {
     const generatedNum = helpers.randomNumberGenerator(args[0]);
