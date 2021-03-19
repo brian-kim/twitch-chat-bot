@@ -16,12 +16,14 @@ To deploy the app, run `npm run dev` in the root directory of the project.
 Command | Description
 --- | ---
 `hello, hey, hi` | Responds to users with a hello message.
+`!title` | Shows the current stream title.
 `!title NEW_TITLE` | Changes the current stream title.
+`!game` | Shows the current stream game.
 `!game GAME_TITLE` | Changes the current stream game.
 `!random` | Generates a random number from 0 to 100.
 `!random NUM` | Generates a random number from 0 to NUM.
-`!love TEXT` | Generates a random percentage from 0 to 100 displaying the love between users and TEXT
-`!uptime` | Shows the current uptime of the stream in hours and minutes
+`!love TEXT` | Generates a random percentage from 0 to 100 displaying the love between users and TEXT.
+`!uptime` | Shows the current uptime of the stream in hours and minutes.
 
 All invalid commands will respond with an error message.
 
