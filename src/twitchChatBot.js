@@ -40,6 +40,14 @@ client.on('message', (channel, user, msg, self) => {
         client.say(channel, slotsResult.result);
       })
       .catch(err => console.log(err))
+  // Get current stream uptime
+  } else if (command === '!uptime') {
+    axios.get(`https://api.twitch.tv/helix/search/channels?query=danboorubox`, streamHeaders)
+      .then(res => {
+        const startTime = res.data.data[0].started_at
+        client.say(channel, `Stream has been live for ${helpers.getstreamUptime(startTime)}`)
+      })
+      .catch(err => console.log(err))
   // Allow broadcaster or mod to change stream title
   } else if ((user.username === process.env.STREAMER_USERNAME || user.mod) && (command === '!title' && commandArgs !== '')) {
     const newInfo = {
