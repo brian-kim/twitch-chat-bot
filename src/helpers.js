@@ -1,5 +1,6 @@
 require('dotenv').config();
 const axios = require('axios');
+const moment = require('moment');
 
 const { streamHeaders } = require('./variables');
 
@@ -55,9 +56,33 @@ const changeStreamGame = async (gameName) => {
   changeStreamInfo(newGame);
 }
 
+const getstreamUptime = (streamStartTime) => {
+  const startTime = streamStartTime;
+  const currentTime = moment.utc();
+  uptime = moment.duration(currentTime.diff(startTime));
+  let hours = parseInt(uptime.asHours());
+  let minutes = parseInt(uptime.asMinutes()) % 60;
+  if (hours === 1) {
+    hours += ' hour';
+  } else if (hours > 1) {
+    hours += ' hours';
+  } else {
+    hours = '';
+  }
+  if (minutes === 1) {
+    minutes += ' minute';
+  } else if (minutes > 1) {
+    minutes += ' minutes';
+  } else {
+    minutes = '';
+  }
+  return `${hours} ${minutes}`;
+}
+
 module.exports = {
   randomNumberGenerator,
   slotMachine,
   changeStreamInfo,
-  changeStreamGame
+  changeStreamGame,
+  getstreamUptime
 };
