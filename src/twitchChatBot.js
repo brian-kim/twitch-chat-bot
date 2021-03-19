@@ -40,22 +40,27 @@ client.on('message', (channel, user, msg, self) => {
         client.say(channel, slotsResult.result);
       })
       .catch(err => console.log(err))
-      // Allow broadcaster or mod to change stream title
+    // Allow broadcaster or mod to change stream title
     } else if ((user.username === process.env.STREAMER_USERNAME || user.mod) && (command === '!title' && commandArgs !== '')) {
       const newInfo = {
         'title': commandArgs
       };
       helpers.changeStreamInfo(newInfo);
       client.say(channel, `Title has been changed to "${commandArgs}"`);      
-      // Allow broadcaster or mod to change stream game
+    // Allow broadcaster or mod to change stream game
     } else if ((user.username === process.env.STREAMER_USERNAME || user.mod) && (command === '!game' && commandArgs !== '')) {
-      helpers.changeStreamGame(commandArgs);
-      client.say(channel, `Game has been changed to "${commandArgs}"`);
+      if (commandArgs === 'unlisted' || commandArgs === 'unset') {
+        helpers.changeStreamInfo({game_id: 0});
+        client.say(channel, `Game has been "${commandArgs}"`);
+      } else {
+        helpers.changeStreamGame(commandArgs);
+        client.say(channel, `Game has been changed to "${commandArgs}"`);
+      }
     } else if (command === '!title') {
       axios.get(`https://api.twitch.tv/helix/channels?broadcaster_id=${process.env.STREAMER_CHANNEL_ID}`, streamHeaders)
         .then(res => client.say(channel, `Current title: ${res.data.data[0].title}`))
         .catch(err => console.log(err))
-      // Get current stream game
+    // Get current stream game
     } else if (command === '!game') {
       axios.get(`https://api.twitch.tv/helix/channels?broadcaster_id=${process.env.STREAMER_CHANNEL_ID}`, streamHeaders)
         .then(res => client.say(channel, `Current game: ${res.data.data[0].game_name}`))
