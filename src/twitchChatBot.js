@@ -29,6 +29,7 @@ client.on('message', (channel, user, msg, self) => {
   // Shows random love percentage between user and message
   } else if (command === '!love') {
     const generatePercentage = helpers.randomNumberGenerator();
+    /* Add logic when there is no arguments after the command */
     client.say(channel, `There is ${generatePercentage}% love between ${user.username} and ${commandArgs}.`);
   // Get the current stream title
   } else if (command === '!slots') {
