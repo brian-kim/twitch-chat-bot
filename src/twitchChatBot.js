@@ -32,6 +32,7 @@ client.on('message', (channel, user, msg, self) => {
     client.say(channel, `There is ${generatePercentage}% love between ${user.username} and ${commandArgs}.`);
   // Get the current stream title
   } else if (command === '!slots') {
+    /* Maybe put axios calls into async/await functions instead? */
     axios.get(`https://decapi.me/bttv/emotes/${process.env.STREAMER_USERNAME}`)
       .then(res => {
         const emotes = res.data.split(' ');
@@ -42,6 +43,7 @@ client.on('message', (channel, user, msg, self) => {
       .catch(err => console.log(err))
   // Get current stream uptime
   } else if (command === '!uptime') {
+    /* Maybe put axios calls into async/await functions instead? */
     axios.get(`https://api.twitch.tv/helix/search/channels?query=danboorubox`, streamHeaders)
       .then(res => {
         const startTime = res.data.data[0].started_at;
@@ -67,11 +69,13 @@ client.on('message', (channel, user, msg, self) => {
     }
   // Get current stream title
   } else if (command === '!title') {
+    /* Maybe put axios calls into async/await functions instead? */
     axios.get(`https://api.twitch.tv/helix/channels?broadcaster_id=${process.env.STREAMER_CHANNEL_ID}`, streamHeaders)
       .then(res => client.say(channel, `Current title: ${res.data.data[0].title}`))
       .catch(err => console.log(err))
   // Get current stream game
   } else if (command === '!game') {
+    /* Maybe put axios calls into async/await functions instead? */
     axios.get(`https://api.twitch.tv/helix/channels?broadcaster_id=${process.env.STREAMER_CHANNEL_ID}`, streamHeaders)
       .then(res => client.say(channel, `Current game: ${res.data.data[0].game_name}`))
       .catch(err => console.log(err))
