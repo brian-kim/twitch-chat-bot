@@ -60,7 +60,7 @@ client.on('message', (channel, user, msg, self) => {
   } else if ((user.username === process.env.STREAMER_USERNAME || user.mod) && (command === '!game' && commandArgs !== '')) {
     if (commandArgs === 'unlisted' || commandArgs === 'unset') {
       helpers.changeStreamInfo({game_id: 0});
-      client.say(channel, `Game has been "${commandArgs}"`);
+      client.say(channel, `Game has been ${commandArgs}`);
     } else {
       helpers.changeStreamGame(commandArgs);
       client.say(channel, `Game has been changed to "${commandArgs}"`);
