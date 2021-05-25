@@ -64,6 +64,7 @@ client.on('message', (channel, user, msg, self) => {
       helpers.changeStreamGame(commandArgs);
       client.say(channel, `Game has been changed to "${commandArgs}"`);
     }
+  // Get current stream title
   } else if (command === '!title') {
     axios.get(`https://api.twitch.tv/helix/channels?broadcaster_id=${process.env.STREAMER_CHANNEL_ID}`, streamHeaders)
       .then(res => client.say(channel, `Current title: ${res.data.data[0].title}`))
