@@ -44,7 +44,8 @@ client.on('message', (channel, user, msg, self) => {
   } else if (command === '!uptime') {
     axios.get(`https://api.twitch.tv/helix/search/channels?query=danboorubox`, streamHeaders)
       .then(res => {
-        const startTime = res.data.data[0].started_at
+        const startTime = res.data.data[0].started_at;
+        // Add logic for when stream is offline
         client.say(channel, `Stream has been live for ${helpers.getstreamUptime(startTime)}`)
       })
       .catch(err => console.log(err))
