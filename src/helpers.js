@@ -17,10 +17,11 @@ const randomNumberGenerator = (num) => {
 const slotMachine = (emotes) => {
   const slotsOutcome = {
     slots: [],
+    result: '',
   };
-  for (let i = 0; i < 3; i++) {
-    slotsOutcome.slots.push(getRandomEmote(emotes));
-  }
+
+  slotsOutcome.slots.push(getRandomEmote(emotes), getRandomEmote(emotes), getRandomEmote(emotes));
+
   if (checkResult(slotsOutcome.slots)) {
     slotsOutcome.result = '/me We got a winner! POGSLIDE';
   } else {
