@@ -19,6 +19,8 @@ client.on('message', (channel, user, msg, self) => {
   const command = args.shift().toLowerCase();
   const commandArgs = args.join(' ');
 
+  /* todo: change if else to switch case */
+
   // Basic hello response
   if (msg === 'hello' || msg === 'hi' || msg === 'hey') {
     client.say(channel, `Hey ${user.username} AYAYA`);
@@ -29,8 +31,11 @@ client.on('message', (channel, user, msg, self) => {
   // Shows random love percentage between user and message
   } else if (command === '!love') {
     const generatePercentage = helpers.randomNumberGenerator();
-    /* Add logic when there is no arguments after the command */
-    client.say(channel, `There is ${generatePercentage}% love between ${user.username} and ${commandArgs}.`);
+    if (!commandArgs) {
+      client.say(channel, 'Please enter something to test your love with.');
+    } else {
+      client.say(channel, `There is ${generatePercentage}% love between ${user.username} and ${commandArgs}.`);
+    }
   // Get the current stream title
   } else if (command === '!slots') {
     /* Maybe put axios calls into async/await functions instead? */
@@ -48,8 +53,12 @@ client.on('message', (channel, user, msg, self) => {
     axios.get(`https://api.twitch.tv/helix/search/channels?query=danboorubox`, streamHeaders)
       .then(res => {
         const startTime = res.data.data[0].started_at;
-        // Add logic for when stream is offline
-        client.say(channel, `Stream has been live for ${helpers.getstreamUptime(startTime)}`)
+        const uptime = helpers.getstreamUptime(startTime);
+        if (uptime === ' ') {
+          client.say(channel, 'Stream is currently offline.');
+        } else {
+          client.say(channel, `Stream has been live for ${uptime}`);
+        }
       })
       .catch(err => console.log(err))
   // Allow broadcaster or mod to change stream title
