@@ -24,6 +24,9 @@ client.on('message', (channel, user, msg, self) => {
   // Basic hello response
   if (msg === 'hello' || msg === 'hi' || msg === 'hey') {
     client.say(channel, `Hey ${user.username} AYAYA`);
+  // Displays all commands available
+  } else if (msg === '!commands') {
+    client.say(channel, `!love !hate !slots !uptime !game !title`);
   // Random number generator
   } else if (command === '!random') {
     const generatedNum = helpers.randomNumberGenerator(args[0]);
@@ -35,6 +38,13 @@ client.on('message', (channel, user, msg, self) => {
       client.say(channel, 'Please enter something to test your love with.');
     } else {
       client.say(channel, `There is ${generatePercentage}% love between ${user.username} and ${commandArgs}.`);
+    }
+  } else if (command === '!hate') {
+    const generatePercentage = helpers.randomNumberGenerator();
+    if (!commandArgs) {
+      client.say(channel, 'Please enter something to test your hate with.');
+    } else {
+      client.say(channel, `There is ${generatePercentage}% hate between ${user.username} and ${commandArgs}.`);
     }
   // Get the current stream title
   } else if (command === '!slots') {
