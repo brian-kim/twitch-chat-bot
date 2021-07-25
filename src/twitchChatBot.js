@@ -97,7 +97,13 @@ client.on('message', (channel, user, msg, self) => {
   } else if (command === '!game') {
     /* Maybe put axios calls into async/await functions instead? */
     axios.get(`https://api.twitch.tv/helix/channels?broadcaster_id=${process.env.STREAMER_CHANNEL_ID}`, streamHeaders)
-      .then(res => client.say(channel, `Current game: ${res.data.data[0].game_name}`))
+      .then(res => {
+        if (res.data.data[0].game_name === '') {
+          client.say(channel, 'No game set currently.')
+        } else {
+          client.say(channel, `Current game: ${res.data.data[0].game_name}`)
+        }
+      })
       .catch(err => console.log(err))
   }
 });
