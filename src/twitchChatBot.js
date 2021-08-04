@@ -42,6 +42,7 @@ client.on('message', (channel, user, msg, self) => {
     } else {
       client.say(channel, `There is ${generatePercentage}% love between ${user.username} and ${commandArgs}.`);
     }
+  // Shows random hate percentage between user and message
   } else if (command === '!hate') {
     const generatePercentage = helpers.randomNumberGenerator();
     if (!commandArgs) {
