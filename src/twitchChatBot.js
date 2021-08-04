@@ -76,6 +76,7 @@ client.on('message', (channel, user, msg, self) => {
           client.say(channel, `${songInfo.artists} - ${songInfo.title}`);
         }
       })
+      .catch(err => console.log(err))
   // Get current stream uptime
   } else if (command === '!uptime') {
     /* Maybe put axios calls into async/await functions instead? */
