@@ -80,10 +80,26 @@ const getstreamUptime = (streamStartTime) => {
   return `${hours} ${minutes}`;
 }
 
+const getCurrentSong = (spotifyData) => {
+  const songArtistData = spotifyData.data.item.artists;
+  let songInfo = {
+    artists: '',
+    title: spotifyData.data.item.name
+  };
+  for (let i = 0; i < songArtistData.length; i++) {
+    songInfo.artists += songArtistData[i].name;
+    if (i !== songArtistData.length - 1) {
+      songInfo.artists += ', ';
+    }
+  }
+  return songInfo;
+}
+
 module.exports = {
   randomNumberGenerator,
   slotMachine,
   changeStreamInfo,
   changeStreamGame,
-  getstreamUptime
+  getstreamUptime,
+  getCurrentSong
 };
