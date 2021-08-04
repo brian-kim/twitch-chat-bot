@@ -2,7 +2,7 @@ require('dotenv').config();
 const axios = require('axios');
 
 const { client } = require('./client');
-const { streamHeaders } = require('./variables');
+const { streamHeaders, spotifyHeaders } = require('./variables');
 const helpers = require('./helpers');
 
 client.connect();
@@ -26,7 +26,10 @@ client.on('message', (channel, user, msg, self) => {
     client.say(channel, `Hey ${user.username} AYAYA`);
   // Displays all commands available
   } else if (msg === '!commands') {
-    client.say(channel, `!love !hate !slots !uptime !game !title`);
+    client.say(channel, `!love !hate !slots !uptime !song !game !title`);
+  // deletes kendall
+  } else if (msg === '!kudastop') {
+    client.say(channel, '/timeout fzpowder 1');
   // Random number generator
   } else if (command === '!random') {
     const generatedNum = helpers.randomNumberGenerator(args[0]);
@@ -57,6 +60,13 @@ client.on('message', (channel, user, msg, self) => {
         client.say(channel, slotsResult.result);
       })
       .catch(err => console.log(err))
+  // Get current Spotify song
+  } else if (command === '!song') {
+    axios.get('https://api.spotify.com/v1/me/player/currently-playing', spotifyHeaders)
+      .then(res => {
+        const songInfo = helpers.getCurrentSong(res);
+        client.say(channel, `${songInfo.artists} - ${songInfo.title}`);
+      })
   // Get current stream uptime
   } else if (command === '!uptime') {
     /* Maybe put axios calls into async/await functions instead? */
