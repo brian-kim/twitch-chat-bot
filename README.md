@@ -1,7 +1,7 @@
 # Twitch Chat Bot
 
 ## Introduction
-A Twitch chat bot for Twitch.tv made with Node.js that uses the Twitch API to enhance chat interaction and provide useful functionality for streamers.
+A Twitch chat bot for Twitch.tv made with Node.js that uses the Twitch and Spotify API to enhance chat interaction and provide useful functionality for streamers.
 
 This project is meant for me to explore the Twitch API and create a functioning Twich chat bot for my own [stream](https://twitch.tv/danboorubox). Although it can be used by anyone, those looking for a chat bot should look to more established chat bots like [Nightbot](https://nightbot.tv/) and [Moobot](https://moo.bot/).
 
