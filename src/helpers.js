@@ -2,7 +2,7 @@ require('dotenv').config();
 const axios = require('axios');
 const moment = require('moment');
 
-const { streamHeaders } = require('./variables');
+const { streamHeaders, spotifyHeaders } = require('./variables');
 
 const randomNumberGenerator = (num) => {
   const toInteger = parseInt(num);
@@ -81,10 +81,10 @@ const getstreamUptime = (streamStartTime) => {
 }
 
 const getCurrentSong = (spotifyData) => {
-  const songArtistData = spotifyData.data.item.artists;
+  const songArtistData = spotifyData.artists;
   let songInfo = {
     artists: '',
-    title: spotifyData.data.item.name
+    title: spotifyData.name
   };
   for (let i = 0; i < songArtistData.length; i++) {
     songInfo.artists += songArtistData[i].name;
