@@ -25,7 +25,15 @@ const streamHeaders = {
   }
 }
 
+//Token generated from https://developer.spotify.com/console/get-users-currently-playing-track/?market=&additional_types=
+const spotifyHeaders = {
+  headers: {
+    'Authorization': process.env.SPOTIFY_OAUTH_TOKEN,
+  }
+}
+
 module.exports = {
   clientVars,
-  streamHeaders
+  streamHeaders,
+  spotifyHeaders
 };
