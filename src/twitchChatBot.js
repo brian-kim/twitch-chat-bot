@@ -61,11 +61,16 @@ client.on('message', (channel, user, msg, self) => {
       })
       .catch(err => console.log(err))
   // Get current Spotify song
+  // Spotify docs can be found here https://developer.spotify.com/documentation/web-api/reference/
   } else if (command === '!song') {
     axios.get('https://api.spotify.com/v1/me/player/currently-playing', spotifyHeaders)
       .then(res => {
-        const songInfo = helpers.getCurrentSong(res);
-        client.say(channel, `${songInfo.artists} - ${songInfo.title}`);
+        if (res.data.item === undefined) {
+          client.say(channel, 'No song playing.')
+        } else {
+          const songInfo = helpers.getCurrentSong(res.data.item);
+          client.say(channel, `${songInfo.artists} - ${songInfo.title}`);
+        }
       })
   // Get current stream uptime
   } else if (command === '!uptime') {
