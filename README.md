@@ -32,6 +32,5 @@ All invalid commands will respond with an error message.
 
 ## Current Backlog
 - Create more commands for users to interact with
-- Music integration with Spotify API to fetch current song playing
 - Connect to a DB and create user interactions with it
 - Deploy to hosting service.
