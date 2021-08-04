@@ -21,7 +21,8 @@ Command | Description
 `!title NEW_TITLE` | Changes the current stream title.
 `!game` | Shows the current stream game.
 `!game GAME_TITLE` | Changes the current stream game.
-`!song` | Show current song playing on user's Spotify
+`!song` | Show current song playing on user's Spotify.
+`!8ball TEXT` | Gives a random magic 8-ball outcome
 `!random` | Generates a random number from 0 to 100.
 `!random NUM` | Generates a random number from 0 to NUM.
 `!love TEXT` | Generates a random percentage from 0 to 100 displaying the love between users and TEXT.

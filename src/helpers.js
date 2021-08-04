@@ -3,6 +3,7 @@ const axios = require('axios');
 const moment = require('moment');
 
 const { streamHeaders, spotifyHeaders } = require('./variables');
+const { EightBallOutcomes } = require('./constants');
 
 const randomNumberGenerator = (num) => {
   const toInteger = parseInt(num);
@@ -95,11 +96,17 @@ const getCurrentSong = (spotifyData) => {
   return songInfo;
 }
 
+const EightBall = () => {
+  const randomOutcome = randomNumberGenerator(EightBallOutcomes.length - 1)
+  return EightBallOutcomes[randomOutcome];
+}
+
 module.exports = {
   randomNumberGenerator,
   slotMachine,
   changeStreamInfo,
   changeStreamGame,
   getstreamUptime,
-  getCurrentSong
+  getCurrentSong,
+  EightBall
 };

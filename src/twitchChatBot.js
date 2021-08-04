@@ -61,8 +61,11 @@ client.on('message', (channel, user, msg, self) => {
         client.say(channel, slotsResult.result);
       })
       .catch(err => console.log(err))
+  // Gives random outcome to user message
+  } else if (command === '!8ball') {
+    client.say(channel, `${helpers.EightBall()}`);
   // Get current Spotify song
-  // Spotify docs can be found here https://developer.spotify.com/documentation/web-api/reference/
+  // Spotify docs can be found here https://developer.spotify.com/documentation/general/guides/authorization-guide/
   } else if (command === '!song') {
     axios.get('https://api.spotify.com/v1/me/player/currently-playing', spotifyHeaders)
       .then(res => {
