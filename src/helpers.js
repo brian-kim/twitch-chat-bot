@@ -1,8 +1,9 @@
 require('dotenv').config();
 const axios = require('axios');
 const moment = require('moment');
+const qs = require('qs');
 
-const { streamHeaders, spotifyHeaders } = require('./variables');
+const { streamHeaders, spotifyTokenRefreshHeader } = require('./variables');
 const { EightBallOutcomes } = require('./constants');
 
 const randomNumberGenerator = (num) => {
@@ -96,6 +97,16 @@ const getCurrentSong = (spotifyData) => {
   return songInfo;
 }
 
+const refreshSpotifyToken = async () => {
+  const data = {
+    'grant_type': 'refresh_token',
+    'refresh_token': process.env.SPOTIFY_REFRESH_TOKEN
+  }
+  const response = await axios.post('https://accounts.spotify.com/api/token', qs.stringify(data), spotifyTokenRefreshHeader);
+  process.env.SPOTIFY_OAUTH_TOKEN = 'Bearer ' + response.data.access_token;
+  console.log(process.env.SPOTIFY_OAUTH_TOKEN);
+}
+
 const EightBall = () => {
   const randomOutcome = randomNumberGenerator(EightBallOutcomes.length - 1)
   return EightBallOutcomes[randomOutcome];
@@ -108,5 +119,6 @@ module.exports = {
   changeStreamGame,
   getstreamUptime,
   getCurrentSong,
+  refreshSpotifyToken,
   EightBall
 };
