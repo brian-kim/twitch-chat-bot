@@ -16,42 +16,42 @@ client.on('message', (channel, user, msg, self) => {
   if (self) {return};
 
   const args = msg.split(' ');
-  const command = args.shift().toLowerCase();
-  const commandArgs = args.join(' ');
+  const cmd = args.shift().toLowerCase();
+  const cmdArgs = args.join(' ');
 
   /* todo: change if else to switch case */
 
   // Basic hello response
   if (msg === 'hello' || msg === 'hi' || msg === 'hey') {
     client.say(channel, `Hey ${user.username} AYAYA`);
-  // Displays all commands available
-  } else if (msg === '!commands') {
+  // Displays all cmds available
+  } else if (msg === '!cmds') {
     client.say(channel, `!love !hate !slots !uptime !song !8ball !game !title`);
   // deletes kendall
   } else if (msg === '!kudastop') {
     client.say(channel, '/timeout fzpowder 1');
   // Random number generator
-  } else if (command === '!random') {
+  } else if (cmd === '!random') {
     const generatedNum = helpers.randomNumberGenerator(args[0]);
     client.say(channel, `${user.username} rolled ${generatedNum}`);
   // Shows random love percentage between user and message
-  } else if (command === '!love') {
+  } else if (cmd === '!love') {
     const generatePercentage = helpers.randomNumberGenerator();
-    if (!commandArgs) {
+    if (!cmdArgs) {
       client.say(channel, 'Please enter something to test your love with.');
     } else {
-      client.say(channel, `There is ${generatePercentage}% love between ${user.username} and ${commandArgs}.`);
+      client.say(channel, `There is ${generatePercentage}% love between ${user.username} and ${cmdArgs}.`);
     }
   // Shows random hate percentage between user and message
-  } else if (command === '!hate') {
+  } else if (cmd === '!hate') {
     const generatePercentage = helpers.randomNumberGenerator();
-    if (!commandArgs) {
+    if (!cmdArgs) {
       client.say(channel, 'Please enter something to test your hate with.');
     } else {
-      client.say(channel, `There is ${generatePercentage}% hate between ${user.username} and ${commandArgs}.`);
+      client.say(channel, `There is ${generatePercentage}% hate between ${user.username} and ${cmdArgs}.`);
     }
   // Get the current stream title
-  } else if (command === '!slots') {
+  } else if (cmd === '!slots') {
     /* Maybe put axios calls into async/await functions instead? */
     axios.get(`https://decapi.me/bttv/emotes/${process.env.STREAMER_USERNAME}`)
       .then(res => {
@@ -62,11 +62,11 @@ client.on('message', (channel, user, msg, self) => {
       })
       .catch(err => console.log(err))
   // Gives random outcome to user message
-  } else if (command === '!8ball') {
+  } else if (cmd === '!8ball') {
     client.say(channel, `${helpers.EightBall()}`);
   // Get current Spotify song
   // Spotify docs can be found here https://developer.spotify.com/documentation/general/guides/authorization-guide/
-  } else if (command === '!song') {
+  } else if (cmd === '!song') {
     axios.get('https://api.spotify.com/v1/me/player/currently-playing', spotifyHeaders)
       .then(res => {
         if (res.data.item === undefined) {
@@ -76,9 +76,9 @@ client.on('message', (channel, user, msg, self) => {
           client.say(channel, `${songInfo.artists} - ${songInfo.title}`);
         }
       })
-      .catch(err => console.log(err))
-  // Get current stream uptime
-  } else if (command === '!uptime') {
+      .catch(() => helpers.refreshSpotifyToken());
+    // Get current stream uptime
+    } else if (cmd === '!uptime') {
     /* Maybe put axios calls into async/await functions instead? */
     axios.get(`https://api.twitch.tv/helix/search/channels?query=danboorubox`, streamHeaders)
       .then(res => {
@@ -92,29 +92,29 @@ client.on('message', (channel, user, msg, self) => {
       })
       .catch(err => console.log(err))
   // Allow broadcaster or mod to change stream title
-  } else if ((user.username === process.env.STREAMER_USERNAME || user.mod) && (command === '!title' && commandArgs !== '')) {
+  } else if ((user.username === process.env.STREAMER_USERNAME || user.mod) && (cmd === '!title' && cmdArgs !== '')) {
     const newInfo = {
-      'title': commandArgs
+      'title': cmdArgs
     };
     helpers.changeStreamInfo(newInfo);
-    client.say(channel, `Title has been changed to "${commandArgs}"`);      
+    client.say(channel, `Title has been changed to "${cmdArgs}"`);      
   // Allow broadcaster or mod to change stream game
-  } else if ((user.username === process.env.STREAMER_USERNAME || user.mod) && (command === '!game' && commandArgs !== '')) {
-    if (commandArgs === 'unlisted' || commandArgs === 'unset') {
+  } else if ((user.username === process.env.STREAMER_USERNAME || user.mod) && (cmd === '!game' && cmdArgs !== '')) {
+    if (cmdArgs === 'none' || cmdArgs === 'unset') {
       helpers.changeStreamInfo({game_id: 0});
-      client.say(channel, `Game has been ${commandArgs}`);
+      client.say(channel, `Game has been ${cmdArgs}`);
     } else {
-      helpers.changeStreamGame(commandArgs);
-      client.say(channel, `Game has been changed to "${commandArgs}"`);
+      helpers.changeStreamGame(cmdArgs);
+      client.say(channel, `Game has been changed to "${cmdArgs}"`);
     }
   // Get current stream title
-  } else if (command === '!title') {
+  } else if (cmd === '!title') {
     /* Maybe put axios calls into async/await functions instead? */
     axios.get(`https://api.twitch.tv/helix/channels?broadcaster_id=${process.env.STREAMER_CHANNEL_ID}`, streamHeaders)
       .then(res => client.say(channel, `Current title: ${res.data.data[0].title}`))
       .catch(err => console.log(err))
   // Get current stream game
-  } else if (command === '!game') {
+  } else if (cmd === '!game') {
     /* Maybe put axios calls into async/await functions instead? */
     axios.get(`https://api.twitch.tv/helix/channels?broadcaster_id=${process.env.STREAMER_CHANNEL_ID}`, streamHeaders)
       .then(res => {
