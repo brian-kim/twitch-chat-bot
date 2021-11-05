@@ -26,8 +26,8 @@ client.on('message', (channel, user, msg, self) => {
   if (msg === 'hello' || msg === 'hi' || msg === 'hey') {
     client.say(channel, `Hey ${user.username} AYAYA`);
   // Displays all cmds available
-  } else if (msg === '!cmds') {
-    client.say(channel, `!love !hate !slots !uptime !song !8ball !game !title`);
+  } else if (msg === '!commands') {
+    client.say(channel, `!love !hate !8ball !slots !uptime !song !game !title`);
   // deletes kendall
   } else if (msg === '!kudastop') {
     client.say(channel, '/timeout fzpowder 1');
