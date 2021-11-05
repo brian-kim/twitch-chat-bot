@@ -4,7 +4,7 @@ const moment = require('moment');
 const qs = require('qs');
 
 const { streamHeaders, spotifyTokenRefreshHeader } = require('./variables');
-const { EightBallOutcomes } = require('./constants');
+const { eightBallOutcomes } = require('./constants');
 
 const randomNumberGenerator = (num) => {
   const toInteger = parseInt(num);
@@ -108,8 +108,8 @@ const refreshSpotifyToken = async () => {
 }
 
 const EightBall = () => {
-  const randomOutcome = randomNumberGenerator(EightBallOutcomes.length - 1)
-  return EightBallOutcomes[randomOutcome];
+  const randomOutcome = randomNumberGenerator(eightBallOutcomes.length - 1)
+  return eightBallOutcomes[randomOutcome];
 }
 
 module.exports = {
