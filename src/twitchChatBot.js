@@ -4,6 +4,7 @@ const axios = require('axios');
 const { client } = require('./client');
 const { streamHeaders, spotifyHeaders } = require('./variables');
 const helpers = require('./helpers');
+const { unlistKeywords } = require('./constants');
 
 client.connect();
 
@@ -100,9 +101,9 @@ client.on('message', (channel, user, msg, self) => {
     client.say(channel, `Title has been changed to "${cmdArgs}"`);      
   // Allow broadcaster or mod to change stream game
   } else if ((user.username === process.env.STREAMER_USERNAME || user.mod) && (cmd === '!game' && cmdArgs !== '')) {
-    if (cmdArgs === 'none' || cmdArgs === 'unset') {
+    if (unlistKeywords.has(cmdArgs)) {
       helpers.changeStreamInfo({game_id: 0});
-      client.say(channel, `Game has been ${cmdArgs}`);
+      client.say(channel, `Game has been unlisted`);
     } else {
       helpers.changeStreamGame(cmdArgs);
       client.say(channel, `Game has been changed to "${cmdArgs}"`);

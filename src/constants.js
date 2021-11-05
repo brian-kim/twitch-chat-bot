@@ -1,4 +1,4 @@
-const EightBallOutcomes = [
+const eightBallOutcomes = [
     'It is certain.',
     'It is decidedly so.',
     'Without a doubt.',
@@ -21,6 +21,9 @@ const EightBallOutcomes = [
     'Very doubtful.'
 ];
 
+const unlistKeywords = new Set(['none', 'unlist', 'unset'])
+
 module.exports = {
-    EightBallOutcomes
+    eightBallOutcomes,
+    unlistKeywords
 }
